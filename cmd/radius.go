@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"net/url"
 
+	"github.com/ElaiShalevRH/tamaAPI/assets"
 	cobra "github.com/spf13/cobra"
 )
 
@@ -20,6 +21,13 @@ const apiURL = "https://gisn.tel-aviv.gov.il/arcgis/rest/services/IView2/MapServ
 // example for a Query with Query params
 // "https://gisn.tel-aviv.gov.il/arcgis/rest/services/IView2/MapServer/772/
 // query?where=request_num%3D20221983&outFields=*&f=pjson"
+
+/*
+type Request struct {
+	request_id string
+
+}
+*/
 
 var client *http.Client
 var address string
@@ -39,7 +47,7 @@ var radiusCmd = &cobra.Command{
 			"where":     "request_num>20241000",
 		}
 
-		resp, err := fetchRadius(params)
+		_, err := fetchRadius(params)
 		if err != nil {
 			fmt.Println("Address is required")
 			return
@@ -54,9 +62,9 @@ var radiusCmd = &cobra.Command{
 		*/
 		// insert CMD logic
 		// logic()
-		fmt.Println("Response")
+		//fmt.Println("Response")
 
-		fmt.Println(resp)
+		//fmt.Println(resp)
 	},
 }
 
@@ -83,7 +91,7 @@ func connect() *http.Client {
 	return client
 }
 
-func fetchRadius(params map[string]string) (map[string]interface{}, error) {
+func fetchRadius(params map[string]string) (*assets.Request, error) {
 
 	client = &http.Client{}
 	connect()
@@ -115,12 +123,19 @@ func fetchRadius(params map[string]string) (map[string]interface{}, error) {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
 
-	var data map[string]interface{}
-	err = json.Unmarshal(body, &data)
+	var request assets.Request
+	err = json.Unmarshal(body, &request)
 	if err != nil {
 		return nil, fmt.Errorf("error: could not unmarshal json")
 	}
 
-	return data, nil
+	fmt.Println(PrettyPrint(request))
 
+	return &request, nil
+
+}
+
+func PrettyPrint(i interface{}) string {
+	s, _ := json.MarshalIndent(i, "", "\t")
+	return string(s)
 }
