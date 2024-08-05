@@ -109,3 +109,14 @@ type Request struct {
 		} `json:"geometry"`
 	} `json:"features"`
 }
+
+// This method return a list of addresses for all rquests
+func (req *Request) GetAddresses() []string {
+
+	var addresses []string
+	for _, request := range req.Features {
+		addresses = append(addresses, request.Attributes.Addresses)
+		addresses = append(addresses, "\n")
+	}
+	return addresses
+}

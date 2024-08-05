@@ -47,11 +47,15 @@ var radiusCmd = &cobra.Command{
 			"where":     "request_num>20241000",
 		}
 
-		_, err := fetchRadius(params)
+		resp, err := fetchRadius(params)
 		if err != nil {
 			fmt.Println("Address is required")
 			return
 		}
+
+		addresses := resp.GetAddresses()
+		fmt.Println("addresses")
+		fmt.Println(addresses)
 
 		/*
 			for key, value := range resp {
@@ -129,7 +133,7 @@ func fetchRadius(params map[string]string) (*assets.Request, error) {
 		return nil, fmt.Errorf("error: could not unmarshal json")
 	}
 
-	fmt.Println(PrettyPrint(request))
+	//fmt.Println(PrettyPrint(request))
 
 	return &request, nil
 
