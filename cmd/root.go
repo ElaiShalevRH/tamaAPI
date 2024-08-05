@@ -19,6 +19,5 @@ func Execute() error {
 }
 
 func init() {
-    // Add subcommands here
     rootCmd.AddCommand(radiusCmd)
 }

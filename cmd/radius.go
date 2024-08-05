@@ -17,7 +17,9 @@ const authToken = "tlv_848e1b42-c0c2"
 const exportURL = "https://api.busnear.by/external/gtfsrt/export"
 const apiURL = "https://gisn.tel-aviv.gov.il/arcgis/rest/services/IView2/MapServer/772/query"
 
-//const realQ = "https://gisn.tel-aviv.gov.il/arcgis/rest/services/IView2/MapServer/772/query?where=request_num%3D20221983&outFields=*&f=pjson"
+// example for a Query with Query params
+// "https://gisn.tel-aviv.gov.il/arcgis/rest/services/IView2/MapServer/772/
+// query?where=request_num%3D20221983&outFields=*&f=pjson"
 
 var client *http.Client
 var address string
@@ -60,7 +62,6 @@ var radiusCmd = &cobra.Command{
 
 func init() {
 	radiusCmd.Flags().StringVarP(&address, "addy", "a", "a", "a")
-	//connect()
 }
 
 func connect() *http.Client {
@@ -78,7 +79,6 @@ func connect() *http.Client {
 		log.Fatalf("Error making request: %v", err)
 	}
 
-	//return
 	defer resp.Body.Close()
 	return client
 }
@@ -89,7 +89,6 @@ func fetchRadius(params map[string]string) (map[string]interface{}, error) {
 	connect()
 
 	baseURL, err := url.Parse(apiURL)
-	fmt.Println("XXXX")
 
 	if err != nil {
 		return nil, fmt.Errorf("error parsing URL")
@@ -121,8 +120,6 @@ func fetchRadius(params map[string]string) (map[string]interface{}, error) {
 	if err != nil {
 		return nil, fmt.Errorf("error: could not unmarshal json")
 	}
-	//marshaled, err := json.MarshalIndent(data, "", "   ")
-	//err = json.Unmarshal(marshaled, &data)
 
 	return data, nil
 
