@@ -1,0 +1,10 @@
+[allowlist]
+  description = "Global Allowlist"
+
+  # Ignore based on any subset of the file path
+  paths = [
+    # Ignore all example certs
+    '''\/example.*\.pem$''',
+                
+    # Ignore anything with the word tlv anywhere in the path
+    '''tlv''',

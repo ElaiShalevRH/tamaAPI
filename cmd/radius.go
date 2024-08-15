@@ -14,7 +14,7 @@ import (
 
 // Use Authorization header wuth apiAuth to connect
 // To the TLV API
-const authToken = "tlv_848e1b42-c0c2"
+const authToken = "tlv_848e1b42-c0c2" // notsecret
 const exportURL = "https://api.busnear.by/external/gtfsrt/export"
 const apiURL = "https://gisn.tel-aviv.gov.il/arcgis/rest/services/IView2/MapServer/772/query"
 
@@ -133,7 +133,8 @@ func fetchRadius(params map[string]string) (*assets.Request, error) {
 		return nil, fmt.Errorf("error: could not unmarshal json")
 	}
 
-	//fmt.Println(PrettyPrint(request))
+	fmt.Println(PrettyPrint(request))
+	fmt.Println(request.GetAddresses())
 
 	return &request, nil
 

@@ -120,3 +120,20 @@ func (req *Request) GetAddresses() []string {
 	}
 	return addresses
 }
+
+/*
+func (req *Request) GetCentroid() string {
+
+	rings := req.Features[0].Geometry.Rings
+
+	coords := []geom.Coord{}
+	for x,_ := range rings{
+		for y, _ := range rings {
+			coords = append(coords,rings[x][y])
+		}
+	}
+
+	polygon := geom.NewPolygon(geom.XY)
+	polygon.Centr
+}
+*/
